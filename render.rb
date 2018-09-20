@@ -43,19 +43,19 @@ module Render
   end
 
   def backlog_address
-    'https://sqs.us-west-2.amazonaws.com/088617881078/backlog_smashanalytics_sqs'
+    ENV['BACKLOG_QUEUE']
   end
-  
+
   def wip_address
-    'https://sqs.us-west-2.amazonaws.com/088617881078/wip_smashanalytics_sqs'
+    ENV['WIP_QUEUE']
   end
 
   def finished_address
-    'https://sqs.us-west-2.amazonaws.com/088617881078/finished_smashanalytics_sqs'
+    ENV['FINISHED_QUEUE']
   end
 
   def needs_attention_address
-    'https://sqs.us-west-2.amazonaws.com/088617881078/needs_attention_queue'
+    ENV['NEEDS_ATTENTION_QUEUE']
   end
 
    def ec2
@@ -86,19 +86,19 @@ module Render
   end
 
   def sqs_queue_url
-    'https://sqs.us-west-2.amazonaws.com/088617881078/TranscodeSQS'
+    ENV['PROCESSING_QUEUE'] # transcoder job
   end
 
   def pipeline_id
-    '1456107551216-9skecp'
+    ENV['PIPELINE']
   end
 
 
   def preset_id
-    '1455845953216-vpfmx1'
+    ENV['PRESET_ID']
   end
 
   def region
-    'us-west-2'
+    ENV['REGION'] || 'us-west-2'
   end
 end

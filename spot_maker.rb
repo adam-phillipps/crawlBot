@@ -55,7 +55,7 @@ class SpotMaker
 
     def slave_fleet_params(instance_count)
       bp = best_price # only want the method to run once
-      price = bp[:spot_price] 
+      price = bp[:spot_price]
       availability_zone = bp[:availability_zone]
       {
         client_token: "RenderSlave-#{SecureRandom.hex}",
@@ -70,10 +70,10 @@ class SpotMaker
     def best_price(image = slave_image)
       best_match = spot_prices.each.map(&:spot_price_history).
         flatten.map do |sph|
-          { 
+          {
             spot_price: sph.spot_price,
             availability_zone: sph.availability_zone,
-            instance_type: sph.instance_type 
+            instance_type: sph.instance_type
           }
         end.min_by { |sp| sp[:price] }
 
@@ -124,7 +124,7 @@ class SpotMaker
     end
 
     def spot_price_history_params(availability_zone)
-        { 
+        {
           start_time: (Time.now + 36000).iso8601.to_s,
           instance_types: slave_image_tag_filter('instance_types'),#s.select { |t| t.key.eql?  }.first.value.split(','),
           product_descriptions: slave_image_tag_filter('product_descriptions'),#slave_image.tags.select{ |t| t.key.eql? 'product_descriptions' }.first.value.split(','),
@@ -145,11 +145,11 @@ class SpotMaker
     end
 
     def backlog_address
-      'https://sqs.us-west-2.amazonaws.com/088617881078/backlog_smashanalytics_sqs'
+      ENV['BACKLOG_QUEUE']
     end
 
     def wip_address
-      'https://sqs.us-west-2.amazonaws.com/088617881078/wip_smashanalytics_sqs'
+      ENV['WIP_QUEUE']
     end
 
   rescue => e
